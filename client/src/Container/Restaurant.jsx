@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { findSeller } from '../Redux/CRUDUser'
 import { addCart, selectCategory } from '../Redux/foodSlice'
@@ -16,7 +16,7 @@ const Restaurant = () => {
     const dispatch = useDispatch()
     useEffect(() => {
         scrollToTop()
-        dispatch(findSeller(_id))
+        dispatch(findSeller(_id)) // eslint-disable-next-line
     }, [_id, selectCategory])
     const seller = useSelector(state => state.seller)
 const products = seller.products
@@ -65,7 +65,7 @@ if(seller?.products?.length>=1){
                     <div className='w-full bg-gray-200 h-1 my-2'><div className='bg-yellow-500 w-16 h-1'></div></div>
 
                     <div className=' overflow-y-auto w-full'>
-                        {selectedCategory && seller?.products?.filter((product) => product.category == selectedCategory)?.map((product) => {
+                        {selectedCategory && seller?.products?.filter((product) => product.category === selectedCategory)?.map((product) => {
                             return (
                                 <div key={Math.random() + Math.random()} className=' h-fit border-2 border-gray-100 flex items-center justify-around flex-wrap'>
                                     <img src={product.image} alt="" className='w-24 h-24 object-contain' />

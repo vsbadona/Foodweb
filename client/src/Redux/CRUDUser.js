@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 export const loginUser = createAsyncThunk("user/login", async (props) => {
     const { phone, password } = props
@@ -46,7 +45,7 @@ export const findCategories = createAsyncThunk('user/categories',async() => {
 
 
 export const orderNow = createAsyncThunk('user/order',async(props) => {
-    const {userId,email,phone,products,village,landmark,name,total}=props
+    const {userId,products,village,landmark,total}=props
     const userAddress = landmark + "," + village
  const sellerId = products[0].sellerId
  const data = await axios.post(`${process.env.REACT_APP_API}/order`,{userId,products,sellerId,userAddress,total})
@@ -66,7 +65,7 @@ export const updateCategory = createAsyncThunk('seller/updateCategory',async(pro
     return data.data
 })
 export const createCategory = createAsyncThunk('seller/createCategory',async(props) => {
-    const {name,image,id}=props
+    const {name,image}=props
     const data = await axios.get(`${process.env.REACT_APP_API}/seller/createcategory?name=${name}&image=${image}`)
     return data.data
 })
@@ -97,7 +96,6 @@ export const loginSeller = createAsyncThunk('seller/login',async(props) => {
    return data.data
 })
 export const findSellerOrders = createAsyncThunk('seller/findorders',async(props) => {
-    const sellerID = props
     const data = await  axios.get(`${process.env.REACT_APP_API}/seller/orders?sellerID=${props}`)
    return data.data
 })

@@ -2,13 +2,12 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { findMyOrders } from '../Redux/CRUDUser'
 import Empty from "../Assets/empty.svg"
-import { checkCart } from '../Redux/foodSlice'
 const Orders = () => {
     const dispatch = useDispatch()
     const data = useSelector(state => state.userData)
     const _id = data
     useEffect(() => {
-        dispatch(findMyOrders(_id))
+        dispatch(findMyOrders(_id)) // eslint-disable-next-line
     }, [])
     const orders = useSelector(state => state.orders)
     const orderCards = () => {
@@ -65,7 +64,7 @@ const Orders = () => {
         )
     }
     return (
-        orders.length == 0 ? <div className='w-full  pt-28 md:pt-32  flex flex-col items-center justify-center'>
+        orders.length === 0 ? <div className='w-full  pt-28 md:pt-32  flex flex-col items-center justify-center'>
             <img src={Empty} alt="" className='md:w-1/3 md:h-1/3 object-contain' />
             <h1 className='text-4xl font-bold mt-12'>No Orders Found</h1>
         </div> : <div className='w-3/4 mx-auto  py-32 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 justify-items-center gap-x-48 gap-y-20'>

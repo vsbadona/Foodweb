@@ -12,18 +12,18 @@ const RestroOrders = () => {
     dispatch(findSellerOrders(sellerData._id))
     if (orders?.length >= 1) {
       recieved()
-    }
+    }// eslint-disable-next-line
   }, [])
   const recieved = async () => {
-    const filterOrder = await orders.filter(order => order.status == "Recieved")
+    const filterOrder = await orders.filter(order => order.status === "Recieved")
     setfilteredOrders(filterOrder)
   }
   const prepared = async () => {
-    const filterOrder = await orders.filter(order => order.status == "Prepared")
+    const filterOrder = await orders.filter(order => order.status === "Prepared")
     setfilteredOrders(filterOrder)
   }
   const deliverey = async () => {
-    const filterOrder = await orders.filter(order => order.status == "Delivered")
+    const filterOrder = await orders.filter(order => order.status === "Delivered")
     setfilteredOrders(filterOrder)
   }
 
@@ -54,7 +54,7 @@ const RestroOrders = () => {
                 <i className="fa fa-angle-right"></i>
               </div>
             </div>
-          )
+          ) 
         })}
       </div>
       <div className="w-full px-3">
@@ -106,8 +106,8 @@ const RestroOrders = () => {
           </div>
           <div className="flex justify-end">
             <button onClick={()=>{dispatch(manageOrders({_id:viewOrder._id, status:"Cancelled"}));dispatch(findSellerOrders(sellerData._id))}} className='text-white bg-blue-500 p-3 my-3 hover:bg-blue-700  mx-2 rounded-xl'>Cancel</button>
-            {viewOrder.status == "Recieved" && <button onClick={()=>{dispatch(manageOrders({_id:viewOrder._id, status:"Prepared"}));dispatch(findSellerOrders(sellerData._id))}} className='text-white bg-red-500 p-3 my-3 hover:bg-red-700  mx-2 rounded-xl'>Prepared</button>}
-            {viewOrder.status == "Prepared" && <button onClick={()=>{dispatch(manageOrders({_id:viewOrder._id, status:"Delivered"}));dispatch(findSellerOrders(sellerData._id))}} className='text-white bg-green-500 p-3 my-3 hover:bg-green-700  mx-2 rounded-xl'>Delivered</button>}
+            {viewOrder.status === "Recieved" && <button onClick={()=>{dispatch(manageOrders({_id:viewOrder._id, status:"Prepared"}));dispatch(findSellerOrders(sellerData._id))}} className='text-white bg-red-500 p-3 my-3 hover:bg-red-700  mx-2 rounded-xl'>Prepared</button>}
+            {viewOrder.status === "Prepared" && <button onClick={()=>{dispatch(manageOrders({_id:viewOrder._id, status:"Delivered"}));dispatch(findSellerOrders(sellerData._id))}} className='text-white bg-green-500 p-3 my-3 hover:bg-green-700  mx-2 rounded-xl'>Delivered</button>}
           </div>
         </div>
       </div>

@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react'
-import Restaurant from "../Assets/Restaurant.jpg"
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import norest from "../Assets/norest.png"
-import { findRestaurant, findSeller } from '../Redux/CRUDUser'
+import { findRestaurant} from '../Redux/CRUDUser'
 import Cookies from 'js-cookie'
 
 const Restaurants = () => {
@@ -11,7 +10,7 @@ const Restaurants = () => {
   const dispatch = useDispatch()
   const restaurants = useSelector(state => state.restaurants)
   useEffect(() => {
-    dispatch(findRestaurant())
+    dispatch(findRestaurant()) // eslint-disable-next-line
   }, [])
   return (
     <div className='pt-12 bg-gray-100'>
@@ -48,7 +47,7 @@ const Restaurants = () => {
           </div>
         )}
       </div>}
-      {restaurants.length == 0 && <div className="flex flex-col items-center justify-center">
+      {restaurants.length === 0 && <div className="flex flex-col items-center justify-center">
         <div className='text-[200px] text-red-500 p-16' style={{ backgroundImage: `url(${norest})`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" }}><i className="fa fa-cancel"></i></div>
         <h1 className='text-4xl font-bold -mt-8'>No Restaurant Found</h1>
       </div>}

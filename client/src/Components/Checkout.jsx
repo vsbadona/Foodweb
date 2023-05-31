@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { orderNow } from '../Redux/CRUDUser'
-import { useNavigate } from 'react-router-dom'
 
 const Checkout = () => {
     const cartItems = useSelector(state => state.cartItems)

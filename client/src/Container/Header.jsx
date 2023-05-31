@@ -10,14 +10,14 @@ const Header = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const handleNav = () => {
-    if (display == "hidden") {
+    if (display === "hidden") {
       setDisplay("block")
     } else {
       setDisplay("hidden")
     }
   }
   const handleMenu = () => {
-    if (submenu == "hidden") {
+    if (submenu === "hidden") {
       setSubmenu("block")
     } else {
       setSubmenu("hidden")
@@ -29,7 +29,7 @@ const Header = () => {
   const [submenu, setSubmenu] = useState(false)
   useEffect(() => {
     dispatch(checkLogin())
-    handleMenu()
+    handleMenu() // eslint-disable-next-line
   }, [])
   const auth = useSelector(state => state.login)
   return (

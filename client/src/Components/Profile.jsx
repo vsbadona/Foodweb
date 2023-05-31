@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import { updateProfile } from '../Redux/CRUDUser'
 
 const Profile = () => {
@@ -16,11 +15,10 @@ const Profile = () => {
     })
 useEffect(()=>{
     if(data){
-        setProfile(data)
-    }
+        setProfile(data) 
+    } // eslint-disable-next-line
 },[])
-const navigate = useNavigate()
-    const handleChange = (e) => {
+   const handleChange = (e) => {
         setProfile({...profile,[e.target.name]:e.target.value})
     }
     return (

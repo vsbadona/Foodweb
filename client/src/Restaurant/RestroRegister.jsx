@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 const RestroRegister = () => {
     const navigate = useNavigate()
-    const dispatch = useDispatch()
     const [details, setdetails] = useState({
       image: "",
       name: "",
@@ -16,7 +14,7 @@ const RestroRegister = () => {
   const handleChange = (e) => {
     setdetails({...details,[e.target.name]:e.target.value})
   }
-  return (
+  return ( 
     <div className='w-screen md:w-1/3 h-fit mx-auto px-8 bg-white pt-32  ' >
     <div className='mx-auto'>
     <h1 className='text-2xl my-5 font-semibold'>Restaurant Sign Up</h1>

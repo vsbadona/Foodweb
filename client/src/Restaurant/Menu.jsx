@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Category from './Components/Category'
 import Items from './Components/Items'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { toogleCart } from '../Redux/foodSlice'
 
 

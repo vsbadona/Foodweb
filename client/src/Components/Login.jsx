@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Burger from "../Assets/HeroBurger.png"
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { loginUser } from '../Redux/CRUDUser'
-import { checkLogin } from '../Redux/foodSlice'
 
 const Login = () => {
   const dispatch = useDispatch()
-  const auth = useSelector(state => state.login)
   const navigate = useNavigate()
   const [login,setLogin]=useState({phone:"",password:""})
   const handleChange = (e) => {

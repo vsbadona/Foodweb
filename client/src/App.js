@@ -1,14 +1,12 @@
-import logo from './logo.svg';
 import './App.css';
 import Header from './Container/Header.jsx'
 import Register from './Components/Register';
-import { BrowserRouter as Router, Route, Routes ,redirect, useNavigate} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './Components/Login';
 import Homepage from './Container/Homepage';
 import Footer from './Container/Footer';
 import Restaurant from './Container/Restaurant';
 import Allrestautants from './Container/Allrestautants';
-import MyAccount from './Container/MyAccount';
 import Orders from './Components/Orders';
 import Profile from './Components/Profile';
 import Cart from './Container/Cart';
@@ -44,7 +42,7 @@ function App() {
         </Routes>
         <Footer />
       </Router>}
- {role ==  "user" &&  <Router>
+ {role ===  "user" &&  <Router>
         <Header />
         {cartdisplay && <Cart />}
         <Routes>
@@ -60,7 +58,7 @@ function App() {
         <Footer />
       </Router>}
 
-      {role == "restaurant" &&   <Router>
+      {role === "restaurant" &&   <Router>
     <RestroHeader/>
    <Routes>
    <Route path="*" element={<Menu />} />  
@@ -68,7 +66,7 @@ function App() {
       <Route path='/seller/orders' element={<RestroOrders/>}></Route>
       <Route path='/seller/profile' element={<RestroProfile/>}></Route>
     </Routes>
-   </Router>}
+   </Router>} 
     </>
   );
 }

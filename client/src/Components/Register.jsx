@@ -17,8 +17,8 @@ const Register = () => {
 })
 const handleChange = (e) => {
   setdetails({...details,[e.target.name]:e.target.value})
-}
-{regist && navigate('/login')}
+} // eslint-disable-next-line
+{regist && navigate('/login')} 
   return (
     <div className='w-screen md:w-1/3 h-fit mx-auto px-8 bg-white pt-36 ' >
      <div className='mx-auto'>

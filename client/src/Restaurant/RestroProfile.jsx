@@ -21,7 +21,7 @@ const RestroProfile = () => {
     const dispatch = useDispatch()
     useEffect(()=>{
       dispatch(checkLogin())
-      dispatch(findCategories())
+      dispatch(findCategories()) // eslint-disable-next-line
     },[])
     return (
         <div className='w-screen '>
@@ -64,7 +64,7 @@ const RestroProfile = () => {
                        </div>
                         {/* <input type="password" name="password" value={profile.password} onChange={handleChange} placeholder='Enter Your Password' className='pl-3 w-full h-12 border-2 outline-none' /> */}
                     </div>
-
+ 
                 </div>
                 <div className="w-full h-fit flex flex-wrap items-center gap-x-5">
                    {sellerData?.categories?.length >=1 && sellerData?.categories?.map((category) => {

@@ -12,7 +12,7 @@ const Allrestautants = () => {
     useEffect(() => {
         dispatch(findCategories())
         dispatch(findRestaurant())
-        dispatch(filterSeller(Categories))
+        dispatch(filterSeller(Categories)) // eslint-disable-next-line
     }, [Categories])
     const Restros = useSelector(state => state.filteredSeller)
     const categories = useSelector(state => state.categories)
@@ -33,7 +33,7 @@ const Allrestautants = () => {
                             <input type="radio" name="" id="" value={category.name} onChange={handleRadioChange} />
                             <h1>{category.name}</h1>
                         </div>
-                        <h1>({restaurants.filter((cat) => cat.categories.find(categ => categ.name == category.name)).length})</h1>
+                        <h1>({restaurants.filter((cat) => cat.categories.find(categ => categ.name === category.name)).length})</h1>
                     </div>
                 )}
 

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import Checkout from '../Components/Checkout'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { checkCart, clearCart, removeItem, toogleCart, updateCart } from '../Redux/foodSlice'
 import { useNavigate } from 'react-router-dom'
@@ -37,7 +36,7 @@ const Cart = () => {
         dispatch(updateCart(product))
     }
     useEffect(() => {
-        dispatch(checkCart())
+        dispatch(checkCart()) // eslint-disable-next-line
     }, [])
     const total = cartItems.length > 0 && cartItems.reduce((acc, item) => {
         return acc + item.price * item.quantity;

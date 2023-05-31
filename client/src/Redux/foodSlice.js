@@ -1,9 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { filterSeller, findCategories, findMyOrders, findRestaurant, findSeller, loginUser, orderNow, registerUser, updateProfile,updateCategory ,createCategory, createProduct, findProduct, updateProduct, deleteProduct, loginSeller, findSellerOrders, manageOrders, addCategory, removeCategory} from "./CRUDUser";
-import cookie from "jscookie";
-import Cookies from "js-cookie";
-import { Navigate, json, useNavigate } from "react-router-dom";
-import { act } from "@testing-library/react";
+
 
 
 const initialState = {
@@ -28,14 +25,14 @@ const foodSlice = createSlice({
     initialState,
     reducers: {
         toogleCart(state, action) {
-            if (state.cart == false) {
+            if (state.cart === false) {
                 state.cart = true
             } else {
                 state.cart = false
             }
         },
         toogleCategory(state, action) {
-            if (state.createCateg == false) {
+            if (state.createCateg === false) {
                 state.createCateg = true
             } else {
                 state.createCateg = false
@@ -44,7 +41,7 @@ const foodSlice = createSlice({
         checkLogin(state, action) {
           const auth =  localStorage.getItem("login")
           const role =  localStorage.getItem("role")
-          if(auth && role == "user"){
+          if(auth && role === "user"){
             const Data = localStorage.getItem("user")
             const response = JSON.parse(Data)
             if (response?._id) {
@@ -55,7 +52,7 @@ const foodSlice = createSlice({
                 state.login = false
             }
           }else{
-            if(auth && role == "restaurant"){
+            if(auth && role === "restaurant"){
                 const Data = localStorage.getItem("seller")
                 const response = JSON.parse(Data)
                 if (response?._id) {

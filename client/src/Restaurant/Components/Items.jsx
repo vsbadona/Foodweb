@@ -11,7 +11,7 @@ const Items = () => {
   
   const dispatch = useDispatch()
   useEffect(()=>{
-dispatch(findProduct(sellerData?._id))
+dispatch(findProduct(sellerData?._id))// eslint-disable-next-line
   },[])
   const [editProduct,setEditProduct]=useState({
     display:false,

@@ -16,8 +16,8 @@ const CreateItem = ({ data }) => {
     description: description || "",
     category: category || "",
     sellerId: sellerData._id
-  })
-  useEffect(() => { dispatch(findCategories()) }, [])
+  })// eslint-disable-next-line
+  useEffect(() => { dispatch(findCategories()) }, []) 
   return (
     <div className='border-2 rounded-t-xl w-screen md:w-1/2 h-fit z-50 bg-opacity-100 bg-white fixed top-1/2 bottom-1/2 left-1/2 right-1/2 transform -translate-x-1/2 -translate-y-1/2'>
       <div className="flex items-center justify-between px-3 border-b-2 ">

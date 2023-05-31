@@ -8,7 +8,7 @@ const Category = () => {
     const Categories = useSelector(state => state.categories)
     const Cate = useSelector(state => state.createCateg)
     useEffect(()=>{
-dispatch(findCategories())
+dispatch(findCategories()) // eslint-disable-next-line
     },[])
     const [details,setDetails]=useState({
         id:"",

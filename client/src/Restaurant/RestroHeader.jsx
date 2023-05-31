@@ -9,7 +9,7 @@ const RestroHeader = () => {
   const sellerData = useSelector(state => state.userData)
   const dispatch = useDispatch()
   useEffect(()=>{
-    dispatch(checkLogin())
+    dispatch(checkLogin())// eslint-disable-next-line
   },[])
   return (
     <div className="w-full h-fit bg-orange-500 text-white flex flex-col gap-y-5 py-3 lg:flex-row  justify-between items-center px-12">
