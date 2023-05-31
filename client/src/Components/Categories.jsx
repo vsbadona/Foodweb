@@ -16,7 +16,7 @@ const Categories = () => {
         <div className='my-8'>
             <p className='text-yellow-500 text-center font-serif font-semibold mb-3'>TOP FOODS</p>
             <h1 className='font-serif font-bold text-center text-3xl'>Our Categories</h1>
-            <h1 className="text-yellow-500 text-3xl text-center">----</h1>
+            <h1 className="text-yellow-500 text-3xl text-center bg-opacity-0">----</h1>
             <div className='grid xs:grid-col-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-12 place-items-center w-3/4 mx-auto mt-12 font-serif'>
                 {Categories?.length !== 0 && Categories?.map((category) => {
                     return (
