@@ -22,7 +22,7 @@ const DeliveryOrders = () => {
     const filterOrder = await orders.filter(order => order.status === "Delivery")
     setfilteredOrders(filterOrder)
   }
-
+console.log(viewOrder);
   useEffect(() => {
     dispatch(findOrders()) // eslint-disable-next-line
   }, [])
@@ -72,6 +72,7 @@ const DeliveryOrders = () => {
           <div className="flex flex-col sm:flex-row items-center justify-around gap-y-3">
             <div className="flex flex-col items-center gap-y-3">
               <h1 className='text-gray-400'>Delivery Address</h1>
+              <h1 className='text-gray-400'><i className="fa fa-phone"></i>{viewOrder.userPhone}</h1>
               <h1 className='font-bold'><i className="fa fa-location text-orange-500"></i> {viewOrder.userAddress}</h1>
             </div>
             <div className="flex flex-col">
