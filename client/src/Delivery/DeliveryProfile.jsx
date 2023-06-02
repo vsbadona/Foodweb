@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { checkLogin } from '../Redux/foodSlice'
-import { addCategory, findCategories, removeCategory, updatedeliveryProfile } from '../Redux/CRUDUser'
+import {  updatedeliveryProfile } from '../Redux/CRUDUser'
 
 const DeliveryProfile = () => {
     const deliveryData = useSelector(state => state.userData)

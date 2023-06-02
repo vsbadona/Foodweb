@@ -24,7 +24,7 @@ const DeliveryOrders = () => {
   }
 
   useEffect(() => {
-    dispatch(findOrders())
+    dispatch(findOrders()) // eslint-disable-next-line
   }, [])
   return (
     <div className='sm:w-3/4 shadow-xl mx-auto flex flex-col xl:flex-row items-center xl:items-start py-12'>
