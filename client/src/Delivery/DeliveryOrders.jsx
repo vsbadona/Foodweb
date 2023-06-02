@@ -1,42 +1,37 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { findSellerOrders, manageOrders } from '../Redux/CRUDUser'
+import { findOrders, manageOrderDelivery } from '../Redux/CRUDUser'
+import { checkLogin } from '../Redux/foodSlice'
 
-const RestroOrders = () => {
+const DeliveryOrders = () => {
   const dispatch = useDispatch()
-  const sellerData = useSelector(state => state.userData)
+  const deliveryData = useSelector(state => state.userData)
   const orders = useSelector(state => state.orders)
   const [filteredOrders, setfilteredOrders] = useState([])
   const [viewOrder, setViewOrder] = useState({})
-  useEffect(() => {
-    dispatch(findSellerOrders(sellerData._id))
-    if (orders?.length >= 1) {
-      recieved()
-    }// eslint-disable-next-line
-  }, [])
-  const recieved = async () => {
-    dispatch(findSellerOrders(sellerData._id))
-    const filterOrder = await orders.filter(order => order.status === "Recieved")
-    setfilteredOrders(filterOrder)
-  }
+
   const prepared = async () => {
-    dispatch(findSellerOrders(sellerData._id))
+    dispatch(checkLogin())
+    dispatch(findOrders())
     const filterOrder = await orders.filter(order => order.status === "Prepared")
     setfilteredOrders(filterOrder)
   }
-  const deliverey = async () => {
-    dispatch(findSellerOrders(sellerData._id))
-    const filterOrder = await orders.filter(order => order.status === "Delivered")
+  const Delivered = async () => {
+    dispatch(checkLogin())
+    dispatch(findOrders)
+    const filterOrder = await orders.filter(order => order.status === "Delivery")
     setfilteredOrders(filterOrder)
   }
 
+  useEffect(() => {
+    dispatch(findOrders())
+  }, [])
   return (
     <div className='sm:w-3/4 shadow-xl mx-auto flex flex-col xl:flex-row items-center xl:items-start py-12'>
       <div className="w-full xl:w-2/6 border-2  p-3 overflow-y-auto ">
         <div className="flex items-center gap-x-1 w-full justify-center " >
-          <button onClick={recieved} className='hover:bg-orange-500 p-2 border-2  rounded-l-xl hover:text-white'>Recieved</button>
-          <button onClick={prepared} className='hover:bg-orange-500 p-2 border-2  hover:text-white'>Prepared</button>
-          <button onClick={deliverey} className='hover:bg-orange-500 p-2 border-2  rounded-r-xl hover:text-white'>Delivered</button>
+          <button onClick={() => prepared()} className='hover:bg-orange-500 p-2 border-2  hover:text-white'>Prepared</button>
+          <button onClick={() => Delivered()} className='hover:bg-orange-500 p-2 border-2  hover:text-white'>Deliverey</button>
         </div>
         {filteredOrders?.length >= 1 && filteredOrders?.map((order) => {
           const date = new Date(order.date)
@@ -46,7 +41,7 @@ const RestroOrders = () => {
           const Hours = date.getHours()
           const Minutes = date.getMinutes()
           return (
-            <div onClick={()=>setViewOrder(order)} className='w-full h-fit border-2 my-3 flex justify-between items-center p-2'>
+            <div onClick={() => setViewOrder(order)} className='w-full h-fit border-2 my-3 flex justify-between items-center p-2'>
               <div>
                 <h1 className='font-bold'>{order.status} </h1>
                 <h1 className=''>{order._id} </h1>
@@ -57,7 +52,7 @@ const RestroOrders = () => {
                 <i className="fa fa-angle-right"></i>
               </div>
             </div>
-          ) 
+          )
         })}
       </div>
       <div className="w-full px-3">
@@ -66,7 +61,7 @@ const RestroOrders = () => {
           <div className="flex items-center justify-between w-full">
             <div>
               <h1 className='font-bold '>{viewOrder.status}</h1>
-              <h1 className='text-gray-500'> {Date.now()}</h1>
+              <h1 className='text-gray-500'> {filteredOrders.length >= 1 ? `${filteredOrders.length} orders found` : "No Order Found"}</h1>
             </div>
             <div className='flex items-center justify-center'>
               <img src={viewOrder.userImage} alt="" className='w-10 h-10 rounded-full' />
@@ -87,30 +82,30 @@ const RestroOrders = () => {
           </div>
           <div className='w-full h-[1px] my-8 bg-gray-300'></div>
           <h1 className='font-semibold my-3'>Order Menu</h1>
-        {viewOrder?.products?.length>=1 && viewOrder?.products?.map((product)=>{
-          console.log(product);
-          return(
-            <div className="flex flex-col md:flex-row border-2 border-gray-100 my-2 items-center justify-around">
-            <img src={product.image} alt="" className='w-20 h-20 p-2 border-2 border-orange-300 rounded-xl' />
-            <div className="flex items-center justify-around w-full">
-              <div className=''>
-                <h1 className='font-semibold'>{product.name}</h1>
-                <h1>x{product.quantity}</h1>
+          {viewOrder?.products?.length >= 1 && viewOrder?.products?.map((product) => {
+            return (
+              <div className="flex flex-col md:flex-row border-2 border-gray-100 my-2 items-center justify-around">
+                <img src={product.image} alt="" className='w-20 h-20 p-2 border-2 border-orange-300 rounded-xl' />
+                <div className="flex items-center justify-around w-full">
+                  <div className=''>
+                    <h1 className='font-semibold'>{product.name}</h1>
+                    <h1>x{product.quantity}</h1>
+                  </div>
+                  <h1 className='text-orange-500 font-semibold text-lg'>&#8377;{product.price} x {product.quantity} = {product.price * product.quantity}</h1>
+                </div>
               </div>
-              <h1 className='text-orange-500 font-semibold text-lg'>&#8377;{product.price} x {product.quantity} = {product.price*product.quantity}</h1>
-            </div>
-          </div>
-          )
-        })}
+            )
+          })}
           <div className='w-full h-[1px] my-5 bg-gray-300'></div>
           <div className="flex items-center justify-between px-8">
             <h1 className='font-semibold'>Total</h1>
             <h1 className='text-orange-500 font-semibold text-lg'>&#8377; {viewOrder.total}</h1>
           </div>
           <div className="flex justify-end">
-            <button onClick={()=>{dispatch(manageOrders({_id:viewOrder._id, status:"Cancelled"}));dispatch(findSellerOrders(sellerData._id))}} className='text-white bg-blue-500 p-3 my-3 hover:bg-blue-700  mx-2 rounded-xl'>Cancel</button>
-            {viewOrder.status === "Recieved" && <button onClick={()=>{dispatch(manageOrders({_id:viewOrder._id, status:"Prepared"}));dispatch(findSellerOrders(sellerData._id))}} className='text-white bg-red-500 p-3 my-3 hover:bg-red-700  mx-2 rounded-xl'>Prepared</button>}
-            {/* {viewOrder.status === "Prepared" && <button onClick={()=>{dispatch(manageOrders({_id:viewOrder._id, status:"Delivered"}));dispatch(findSellerOrders(sellerData._id))}} className='text-white bg-green-500 p-3 my-3 hover:bg-green-700  mx-2 rounded-xl'>Delivered</button>} */}
+            {viewOrder.status === "Prepared" && <button onClick={() => { dispatch(manageOrderDelivery({ _id: viewOrder._id, status: "Delivery", deliveryId: deliveryData._id })); prepared() }} className='text-white bg-blue-500 p-3 my-3 hover:bg-blue-700  mx-2 rounded-xl'>Delivery</button>}
+            
+            {viewOrder.status === "Delivery" && <button onClick={() => { dispatch(manageOrderDelivery({ _id: viewOrder._id, status: "Delivered", deliveryId: deliveryData._id })); Delivered() }} className='text-white bg-blue-500 p-3 my-3 hover:bg-blue-700  mx-2 rounded-xl'>Delivered</button>}
+
           </div>
         </div>
       </div>
@@ -118,4 +113,4 @@ const RestroOrders = () => {
   )
 }
 
-export default RestroOrders
+export default DeliveryOrders

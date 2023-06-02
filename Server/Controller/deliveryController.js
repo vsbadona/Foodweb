@@ -1,7 +1,7 @@
 import Delivery from "../models/deliverySchema.js";
 import Order from "../models/orderSchema.js";
-
 import bcrypt from "bcryptjs"
+import { Seller } from "../models/sellerSchema.js";
 
 export const registerDelivery = async (req, res) => {
     const { name, image,email, phone, password, location } = req.body
@@ -63,9 +63,9 @@ export const getDelivery = async (req, res) => {
 }
 
 export const findOrder = async (req, res) => {
-const order = await Order.find({deliveryId : undefined}) 
+const order = await Order.find() ;
 if(order.length!==0){
-    res.json(order)
+   res.json({success : order})
 }else{
     res.json({alert:"Yuohh No Order Found"})
 }
@@ -73,8 +73,9 @@ if(order.length!==0){
 
 export const manageOrder = async(req,res) => {
     const {_id,status,deliveryId}=req.query
-if(status == "Pickup"){
+if(status == "Delivery"){
     const findOrder = await Order.updateMany({_id:_id},{status:status},{deliveryId:deliveryId})
+     await Order.findOneAndUpdate({_id:_id} , {deliveryId:deliveryId})
     if(findOrder){
         if (findOrder.modifiedCount === 1) {
             res.json({success:"The status was updated successfully."});
@@ -84,7 +85,8 @@ if(status == "Pickup"){
         }
     }
 }else{
-    const findOrder = await Order.updateOne({_id:_id},{status:status})
+    if(status == "Delivered"){
+        const findOrder = await Order.updateOne({_id:_id},{status:status})
     if(findOrder){
         if (findOrder.modifiedCount === 1) {
             res.json({success:"The status was updated successfully."});
@@ -93,6 +95,32 @@ if(status == "Pickup"){
             res.json({error:"Can't Update Status"})
         }
     }
+    }
 }
 
+}
+
+export const updateProfile = async(req,res) => {
+    const {deliveryId,name,image,email,phone,password,location}=req.body
+    try {
+        const findUser = await Delivery.findById(deliveryId);
+    
+        if (findUser) {
+          const pwdToken = await bcrypt.hash(password, 12);
+          findUser.name = name;
+          findUser.image = image;
+          findUser.email = email;
+          findUser.phone = phone;
+          findUser.location = location;
+          findUser.password = pwdToken;
+    
+          const updatedUser = await findUser.save();
+          res.json({success : "profile updated", data :updatedUser});
+        } else {
+          res.json({ alert: "Login Again To Continue" });
+        }
+      } catch (error) {
+        res.status(500).json({ error: "An error occurred while updating the profile." });
+      }
+    
 }

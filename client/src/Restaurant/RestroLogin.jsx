@@ -23,7 +23,6 @@ const RestroLogin = () => {
     <input type="password" name='password' value={login.password} onChange={handleChange} className='h-8 w-11/12 border-b-2  mb-5 outline-none' />
     <button onClick={()=>dispatch(loginSeller(login))}  className='w-3/4 mx-10 bg-orange-500 rounded-lg h-12 my-2 text-white text-lg font-semibold'>Login</button>
     <h1 className='text-center my-2 text-lg '>Don't Have An Account ? <span className='text-orange-500 font-bold cursor-pointer' onClick={()=>navigate('/seller/register')}>Sign Up</span></h1>
-    <h1 className='text-center my-2  '>Login As User ? <span className='text-orange-500 font-bold cursor-pointer' onClick={()=>navigate('/login')}>Login</span></h1>
     </div>
    </div>
   )

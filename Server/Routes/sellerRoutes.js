@@ -1,9 +1,10 @@
 import express from "express"
-import { createProduct, deleteProduct, editProduct, loginSeller, registerSeller,getSeller, findOrder,manageOrder, createCategory,updateCategory, findProduct, addCategory,removeCategory } from "../Controller/sellerController.js"
+import { createProduct, deleteProduct, editProduct, loginSeller, registerSeller,getSeller, findOrder,manageOrder, createCategory,updateCategory, findProduct, addCategory,removeCategory, updateProfile } from "../Controller/sellerController.js"
 const Routes = express.Router()
 
 Routes.post('/register',registerSeller)
 Routes.post('/login',loginSeller)
+Routes.post('/editprofile',updateProfile)
 Routes.post('/create',createProduct)
 Routes.get('/find',findProduct)
 Routes.post('/edit',editProduct)

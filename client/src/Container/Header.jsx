@@ -51,7 +51,15 @@ const Header = () => {
         </div> : <> <p className='mt-8 lg:mt-0'><Link to="/login">Login</Link></p>
           <p className='mt-8 lg:mt-0'><Link to="/register">Register</Link></p></>}
 
-        <p className='bg-yellow-500 p-3 w-48 mx-auto my-8 lg:my-0'>Search Restaurant</p>
+       {auth && <p className='bg-yellow-500 p-3 w-48 mx-auto my-8 lg:my-0'>Search Restaurants</p>}
+      {!auth &&  <div className='relative' onClick={() => handleMenu()}>
+       <p className='bg-yellow-500 p-3 w-48 mx-auto my-8 lg:my-0'>Login As</p>
+       <div  className={`flex flex-row md:flex-col items-center justify-center gap-y-3 border-2 bg-white md:fixed md:top-20 w-full  md:right-auto p-3 md:w-36 md:${submenu} `}>
+            <p className="hover:bg-gray-200 w-full" onClick={() => { navigate('/login') }}>User</p>
+            <p className="hover:bg-gray-200 w-full" onClick={() => { navigate('/seller/login') }}>Restaurant</p>
+            <p onClick={() => { navigate('/delivery/login') }} className="hover:bg-gray-200 w-full">Delivery Boy</p>
+          </div>
+       </div>}
       </div>
       <button className='text-2xl mr-5 focus:text-red-500 block lg:hidden' onClick={() => handleNav()}><i className="fa fa-bars" ></i></button>
       <div className=' fixed z-50 right-10 bottom-16  md:right-12 md:bottom-12'> 

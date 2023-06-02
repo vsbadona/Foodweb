@@ -219,7 +219,7 @@ if(order.length!==0){
 }
 
 export const manageOrder = async(req,res) => {
-    const {_id,status}=req.body
+    const {_id,status}=req.query
 const findOrder = await Order.updateOne({_id:_id},{status:status})
 if(findOrder){
     if (findOrder.modifiedCount === 1) {
@@ -277,4 +277,30 @@ const updatedCategory = {
         res.status(500).json({ error: 'Internal server error' });
       });
 
+}
+
+export const updateProfile = async(req,res) => {
+    const {sellerId,name,image,email,phone,password,location,logoimage}=req.body
+    try {
+        const findUser = await Seller.findById(sellerId);
+    
+        if (findUser) {
+          const pwdToken = await bcrypt.hash(password, 12);
+          findUser.name = name;
+          findUser.image = image;
+          findUser.email = email;
+          findUser.phone = phone;
+          findUser.location = location;
+          findUser.logoimage = logoimage;
+          findUser.password = pwdToken;
+    
+          const updatedUser = await findUser.save();
+          res.json({success : "profile updated", data :updatedUser});
+        } else {
+          res.json({ alert: "Login Again To Continue" });
+        }
+      } catch (error) {
+        res.status(500).json({ error: "An error occurred while updating the profile." });
+      }
+    
 }

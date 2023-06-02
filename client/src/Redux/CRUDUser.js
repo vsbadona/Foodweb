@@ -95,6 +95,19 @@ export const loginSeller = createAsyncThunk('seller/login',async(props) => {
     const data = await  axios.post(`${process.env.REACT_APP_API}/seller/login`,{phone,password})
    return data.data
 })
+export const registerSeller = createAsyncThunk('seller/register',async(props) => {
+    const {name,email,phone,password,image,logoimage,location} = props
+    const data = await  axios.post(`${process.env.REACT_APP_API}/seller/register`,{name,email,phone,password,image,logoimage,location})
+   return data.data
+})
+export const updatesellerProfile = createAsyncThunk("seller/update", async (props) => {
+    const { name, email, phone, password, image ,logoimage, _id,location } = props
+    const sellerId = _id
+    const data = await axios.post(`${process.env.REACT_APP_API}/seller/editprofile`, { name, email, phone,location, password, image,sellerId,logoimage })
+    const response = data.data;
+    return response
+})
+
 export const findSellerOrders = createAsyncThunk('seller/findorders',async(props) => {
     const data = await  axios.get(`${process.env.REACT_APP_API}/seller/orders?sellerID=${props}`)
    return data.data
@@ -113,4 +126,33 @@ export const removeCategory = createAsyncThunk('seller/removeCategory',async(pro
     const {_id,id} = props
     const data = await  axios.post(`${process.env.REACT_APP_API}/seller/remove`,{_id,id})
    return data.data;
+})
+
+//Delivery API
+
+export const findOrders = createAsyncThunk('delivery/findOrder',async() => {
+    const data = await  axios.get(`${process.env.REACT_APP_API}/delivery/orders`)
+   return data.data;
+})
+export const loginDelivery = createAsyncThunk('delivery/login',async(props) => {
+    const {phone,password} = props
+    const data = await  axios.post(`${process.env.REACT_APP_API}/delivery/login`,{phone,password})
+ return data.data
+})
+export const registerDelivery = createAsyncThunk('delivery/register',async(props) => {
+    const {name,email,password,image,phone,location} = props
+    const data = await  axios.post(`${process.env.REACT_APP_API}/delivery/register`,{name,email,phone,image,password,location})
+  return data.data
+})
+export const manageOrderDelivery = createAsyncThunk('delivery/manage',async(props) => {
+    const {_id,status,deliveryId} = props
+    const data = await  axios.get(`${process.env.REACT_APP_API}/delivery/manage?_id=${_id}&status=${status}&deliveryId=${deliveryId}`)
+  return data.data
+})
+export const updatedeliveryProfile = createAsyncThunk("delivery/update", async (props) => {
+    const { name, email, phone, password, image , _id,location } = props
+    const deliveryId = _id
+    const data = await axios.post(`${process.env.REACT_APP_API}/delivery/editprofile`, { name, email, phone,location, password, image,deliveryId })
+    const response = data.data;
+    return response
 })

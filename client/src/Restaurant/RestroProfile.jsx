@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { checkLogin } from '../Redux/foodSlice'
-import { addCategory, findCategories, removeCategory } from '../Redux/CRUDUser'
+import { addCategory, findCategories, removeCategory, updatesellerProfile } from '../Redux/CRUDUser'
 
 const RestroProfile = () => {
     const sellerData = useSelector(state => state.userData)
@@ -13,7 +13,10 @@ const RestroProfile = () => {
         name: sellerData.name || "",
         phone: sellerData.phone || "",
         email: sellerData.email || "",
-        password: sellerData.password || ""
+        password:  "",
+        logoimage : sellerData.logoimage || "",
+        location : sellerData.location || "",
+        _id : sellerData._id || ""
     })
     const handleChange = (e) => {
         setProfile({...profile,[e.target.name]:e.target.value})
@@ -47,8 +50,16 @@ const RestroProfile = () => {
                         <input type="email" name="email" value={profile.email} onChange={handleChange} placeholder='Enter Your Email' className='pl-3 w-full h-12 border-2 outline-none' />
                     </div>
                     <div>
+                        <h1 className='text-semibold text-lg py-2'>Logo Image</h1>
+                        <input type="text" name="logoimage" value={profile.logoimage} onChange={handleChange} placeholder='Enter Your Logo Image' className='pl-3 w-full h-12 border-2 outline-none' />
+                    </div>
+                    <div>
+                        <h1 className='text-semibold text-lg py-2'>Location</h1>
+                        <input type="text" name="location" value={profile.location} onChange={handleChange} placeholder='Enter Your Location' className='pl-3 w-full h-12 border-2 outline-none' />
+                    </div>
+                    <div>
                         <h1 className='text-semibold text-lg py-2'>Password</h1>
-                        <input type="password" name="password" value={profile.password} onChange={handleChange} placeholder='Enter Your Password' className='pl-3 w-full h-12 border-2 outline-none' />
+                        <input type="password" name="password" value={profile.password} onChange={handleChange} placeholder='Enter Your New Password' className='pl-3 w-full h-12 border-2 outline-none' />
                     </div>
                     <div className=''>
                         <h1 className='text-semibold text-lg py-2'>Categories</h1>
@@ -62,7 +73,7 @@ const RestroProfile = () => {
                     <button onClick={()=>{dispatch(addCategory({_id:sellerData._id,category:{name:category}}));dispatch(checkLogin())}} className='text-white bg-yellow-500 w-56 py-3 mx-2  rounded-xl  my-4' >Save Category</button>
 
                        </div>
-                        {/* <input type="password" name="password" value={profile.password} onChange={handleChange} placeholder='Enter Your Password' className='pl-3 w-full h-12 border-2 outline-none' /> */}
+                     
                     </div>
  
                 </div>
@@ -73,7 +84,7 @@ const RestroProfile = () => {
                     )
                    })}
                 </div>
-                <button className='text-white bg-yellow-500 py-3 mx-2 px-8 rounded-xl float-right my-4'>Save Changes</button>
+                <button onClick={()=>dispatch(updatesellerProfile(sellerData))} className='text-white bg-yellow-500 py-3 mx-2 px-8 rounded-xl float-right my-4'>Save Changes</button>
             </div>
         </div>
     )

@@ -19,6 +19,11 @@ import RestroProfile from './Restaurant/RestroProfile';
 import RestroLogin from './Restaurant/RestroLogin';
 import RestroRegister from './Restaurant/RestroRegister';
 import { useEffect } from 'react';
+import DeliveryHeader from './Delivery/DeliveryHeader';
+import DeliveryOrders from './Delivery/DeliveryOrders';
+import DeliveryRegister from './Delivery/DeliveryRegister';
+import DeliveryLogin from './Delivery/DeliveryLogin';
+import DeliveryProfile from './Delivery/DeliveryProfile';
 
 function App() {
   const cartdisplay = useSelector(state => state.cart)
@@ -27,7 +32,9 @@ function App() {
   useEffect(()=>{},[])
   return (
     <>
-    {!auth && <Router>
+
+
+     {!auth && <Router>
           <Header />
         <Routes>
           <Route path="*" element={<Homepage />} />  
@@ -36,6 +43,8 @@ function App() {
           <Route path='/register' element={<Register />}></Route>
           <Route path='/seller/register' element={<RestroRegister/>}></Route>
       <Route path='/seller/login' element={<RestroLogin/>}></Route>
+      <Route path='/delivery/register' element={<DeliveryRegister/>}></Route>
+    <Route path='/delivery/login' element={<DeliveryLogin/>}></Route>
       <Route path='/restaurant' element={<Restaurant />}></Route>
           <Route path='/restaurants' element={<Allrestautants />}></Route>
 
@@ -56,9 +65,9 @@ function App() {
           <Route path='/restaurants' element={<Allrestautants />}></Route>
         </Routes>
         <Footer />
-      </Router>}
+      </Router>} 
 
-      {role === "restaurant" &&   <Router>
+       {role === "restaurant" &&   <Router>
     <RestroHeader/>
    <Routes>
    <Route path="*" element={<Menu />} />  
@@ -66,7 +75,17 @@ function App() {
       <Route path='/seller/orders' element={<RestroOrders/>}></Route>
       <Route path='/seller/profile' element={<RestroProfile/>}></Route>
     </Routes>
-   </Router>} 
+   </Router>}  
+       {role === "delivery" &&  
+        
+        <Router>
+<DeliveryHeader/>
+  <Routes>
+    <Route path='/delivery/orders' element={<DeliveryOrders/>}></Route>
+    <Route path='/delivery/profile' element={<DeliveryProfile/>}></Route>
+  </Routes>
+</Router>
+        }  
     </>
   );
 }

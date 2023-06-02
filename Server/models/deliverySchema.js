@@ -25,6 +25,10 @@ const deliverySchema = mongoose.Schema({
         type: String,
         required:true,
         default:true
+    },
+    location :{
+        type: String,
+        required:true  
     }
 })
 

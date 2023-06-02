@@ -30,7 +30,7 @@ const Allrestautants = () => {
                 {categories?.length >= 1 && categories?.map((category) =>
                     <div className="flex items-center justify-between text-lg w-full py-2" key={Math.random() + Math.random()}>
                         <div className='flex items-center font-semibold'>
-                            <input type="radio" name="" id="" value={category.name} onChange={handleRadioChange} />
+                            <input type="radio" className='text-orange-500' name="" id="" value={category.name} onChange={handleRadioChange} />
                             <h1>{category.name}</h1>
                         </div>
                         <h1>({restaurants.filter((cat) => cat.categories.find(categ => categ.name === category.name)).length})</h1>

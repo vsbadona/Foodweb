@@ -36,8 +36,7 @@ const orderSchema = mongoose.Schema({
         required: true
     },
     deliveryId: {
-        type: String,
-        default: null
+        type: String
     },
     products: [
         {
