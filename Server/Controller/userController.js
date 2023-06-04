@@ -40,14 +40,25 @@ export const registerUser = async (req, res) => {
 
 export const loginUser = async (req, res) => {
     const { phone, password } = req.body
-  const bb = await bcrypt.hash(password , 12)
-  const cc = await bcrypt.decodeBase64(bb)
-  res.json(bb,cc)
+    if (phone && password) {
+        const findUser = await User.findOne({ phone: phone })
+        if (findUser) {
+            const checkPassword = await bcrypt.compare(password, findUser.password)
+            if (checkPassword) {
+                res.json({ success: "Login Success", data: findUser })
+            } else {
+                res.json({ alert: "Password Is Incorrect" })
+            }
+        } else {
+            res.json({ alert: "Mobile Number Is Not Registered" })
+        }
+    } else {
+        res.json({ alert: "Mobile Number And Password Is Required" })
+    }
 }
 
 export const updateProfile = async(req,res) => {
     const {userId,name,image,email,phone,password}=req.body
- bcrypt.encodeBase64(password , 12)
     try {
         const findUser = await User.findById(userId);
     
