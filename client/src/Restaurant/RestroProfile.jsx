@@ -84,7 +84,7 @@ const RestroProfile = () => {
                     )
                    })}
                 </div>
-                <button onClick={()=>dispatch(updatesellerProfile(sellerData))} className='text-white bg-yellow-500 py-3 mx-2 px-8 rounded-xl float-right my-4'>Save Changes</button>
+                <button disabled={!profile.name || !profile.password || !profile.image || !profile.email || !profile.phone || profile.password.length<6 || !profile.logoimage || !profile.location } onClick={()=>dispatch(updatesellerProfile(sellerData))} className='disabled:bg-yellow-200 text-white bg-yellow-500 py-3 mx-2 px-8 rounded-xl float-right my-4'>Save Changes</button>
             </div>
         </div>
     )

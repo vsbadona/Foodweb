@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateProfile } from '../Redux/CRUDUser'
 
+
 const Profile = () => {
     const dispatch= useDispatch()
     const data = useSelector(state => state.userData)
@@ -11,12 +12,12 @@ const Profile = () => {
         phone: "",
         email: "",
         password: "",
-        userId:data?._id || ""
+        _id:data?._id || ""
     })
 useEffect(()=>{
     if(data){
-        setProfile(data) 
-        setProfile({...profile , password:""})
+        // setProfile(data) 
+        setProfile({...data , password:""})
     } // eslint-disable-next-line
 },[])
    const handleChange = (e) => {
@@ -28,7 +29,7 @@ useEffect(()=>{
                 <p className='text-xl  font-semibold'>Account</p>
                 <p className='text-gray-500  my-5'>Profile Photo</p>
                 <div className="flex items-center gap-x-5">
-                    <img src={profile.image} alt="" className='w-24 h-24 object-contain' />
+                    <img src={profile.image} alt="Invalid Image" className='w-24 h-24 object-contain' />
                     <input className='border-b-2' placeholder='Enter Image Url' type="url" value={profile.image} onChange={handleChange} name="image" id="" title=' dsadd' />
                 </div>
                 <p onClick={()=>setProfile({...Profile,image:""})} className='text-gray-500 text-semibold px-5 cursor-pointer'>Remove</p>
@@ -50,7 +51,7 @@ useEffect(()=>{
                         <input type="password" name="password" value={profile.password} onChange={handleChange} placeholder='Enter Your New Password' className='pl-3 w-full h-12 border-2 outline-none' />
                     </div>
                 </div>
-                <button onClick={()=>dispatch(updateProfile(profile))} className='text-white bg-yellow-500 py-3 mx-2 px-8 rounded-xl float-right my-4'>Save Changes</button>
+                <button disabled={!profile.name || !profile.password || !profile.image || !profile.email || !profile.phone || profile.password.length<6 } onClick={()=>dispatch(updateProfile(profile))} className=' disabled:bg-yellow-200 text-white bg-yellow-500 py-3 mx-2 px-8 rounded-xl float-right my-4'>Save Changes</button>
             </div>
         </div>
     )
