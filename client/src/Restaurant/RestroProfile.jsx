@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { checkLogin } from '../Redux/foodSlice'
-import { addCategory, findCategories, removeCategory, updatesellerProfile } from '../Redux/CRUDUser'
+import { addCategory, findCategories, removeCategory } from '../Redux/CRUDUser'
 import axios from 'axios'
 
 const RestroProfile = () => {
