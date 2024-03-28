@@ -13,6 +13,7 @@ app.use(express.json())
 app.use('/',userRoutes)
 app.use('/seller',sellerRoutes)
 app.use('/delivery',deliveryRoutes)
+app.use('/uploads', express.static('uploads'));
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT , ()=>{console.log(`App is listening on PORT:${PORT}`)})

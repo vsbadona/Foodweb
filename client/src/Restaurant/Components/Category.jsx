@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { findCategories,updateCategory,createCategory } from '../../Redux/CRUDUser'
+import { findCategories,updateCategory,createCategory,deleteCategory } from '../../Redux/CRUDUser'
 import { toogleCategory } from '../../Redux/foodSlice'
 
 const Category = () => {
@@ -51,7 +51,11 @@ x
        </div>
        </div>
        <div className="flex items-center justify-center">
-{details.id?<button onClick={()=>{dispatch(toogleCategory());setDetails({});dispatch(updateCategory(details))}} className='text-white bg-orange-500 p-3 rounded-lg hover:bg-orange-700'>Update Category</button>
+{details.id?<div>
+  <button onClick={()=>{dispatch(toogleCategory());setDetails({});dispatch(deleteCategory(details))}} className='text-white bg-red-500 p-2 rounded-lg hover:bg-orange-700'>Delete Category</button>
+  <button onClick={()=>{dispatch(toogleCategory());setDetails({});dispatch(updateCategory(details))}} className='text-white bg-orange-500 p-2 rounded-lg hover:bg-orange-700'>Update Category</button>
+</div>
+
 :        <button className='text-white bg-orange-500 p-3 rounded-lg hover:bg-orange-700' onClick={()=>{dispatch(toogleCategory());setDetails({});dispatch(createCategory(details))}}>Create Category</button>
 }
        </div>

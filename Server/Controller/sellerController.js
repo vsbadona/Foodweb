@@ -278,29 +278,78 @@ const updatedCategory = {
       });
 
 }
-
-export const updateProfile = async(req,res) => {
-    const {sellerId,name,image,email,phone,password,location,logoimage}=req.body
+export const deleteCategory = async (req, res) => {
     try {
-        const findUser = await Seller.findById(sellerId);
+        const { id } = req.body;
+
+        const deletedCategory = await Category.findByIdAndDelete(id);
+        if (!deletedCategory) {
+            return res.status(404).json({ alert: 'Category not found' });
+        }
+        
+        const remainingCategories = await Category.find();
+        res.json({ success: "Category deleted", data: remainingCategories });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}
+
+export const updatePassword = async(req,res) => {
+    const {id,password} = req.body;
+    try {
+        const findUser = await Seller.findById(id);
     
         if (findUser) {
           const pwdToken = await bcrypt.hash(password, 12);
-          findUser.name = name;
-          findUser.image = image;
-          findUser.email = email;
-          findUser.phone = phone;
-          findUser.location = location;
-          findUser.logoimage = logoimage;
-          findUser.password = pwdToken;
+           findUser.password = pwdToken;
     
           const updatedUser = await findUser.save();
-          res.json({success : "profile updated", data :updatedUser});
+          res.json({success : "password updated", data :updatedUser});
         } else {
           res.json({ alert: "Login Again To Continue" });
         }
       } catch (error) {
         res.status(500).json({ error: "An error occurred while updating the profile." });
-      }
-    
+      } 
 }
+
+export const updateProfile = async (req, res) => {
+    const { _id, name, email, phone, location, logoimage } = req.body;
+    let image = ''; // Initialize image variable
+
+    try {
+        const findUser = await Seller.findById(_id);
+
+        // Check if user exists
+        if (findUser) {
+            // Check if req.file exists
+            if (req.file) {
+                image = req.file.path;
+            }
+
+            // Update user fields
+            findUser.name = name;
+            findUser.image = image;
+            findUser.email = email;
+            findUser.phone = phone;
+            findUser.location = location;
+            findUser.logoimage = logoimage;
+
+            // Save updated user document
+            const updatedUser = await findUser.save();
+
+            // Return success response
+            return res.status(200).json({ success: "Profile updated", data: updatedUser });
+        } else {
+            // User not found
+            return res.status(404).json({ alert: "User not found" });
+        }
+    } catch (error) {
+        // Log error for debugging
+        console.error("Error updating profile:", error);
+
+        // Return error response
+        return res.status(500).json({ error: "An error occurred while updating the profile." });
+    }
+};

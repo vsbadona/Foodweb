@@ -30,7 +30,7 @@ useEffect(()=>{
                 <p className='text-gray-500  my-5'>Profile Photo</p>
                 <div className="flex items-center gap-x-5">
                     <img src={profile.image} alt="Invalid Url" className='w-24 h-24 object-contain' />
-                    <input className='border-b-2' placeholder='Enter Image Url' type="url" value={profile.image} onChange={handleChange} name="image" id="" title=' dsadd' />
+                    <input className='border-b-2' placeholder='Enter Image Url' type="z" value={profile.image} onChange={handleChange} name="image" id="" title=' dsadd' />
                 </div>
                 <p onClick={()=>setProfile({...Profile,image:""})} className='text-gray-500 text-semibold px-5 cursor-pointer'>Remove</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 h-fit">

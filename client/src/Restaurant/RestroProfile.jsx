@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { checkLogin } from '../Redux/foodSlice'
 import { addCategory, findCategories, removeCategory, updatesellerProfile } from '../Redux/CRUDUser'
+import axios from 'axios'
 
 const RestroProfile = () => {
     const sellerData = useSelector(state => state.userData)
@@ -9,20 +10,24 @@ const RestroProfile = () => {
     const [category,setCategory]=useState("")
 
     const [profile, setProfile] = useState({
-        image: sellerData.image || "https://fooddesk.dexignlab.com/react/demo/static/media/no-img-avatar.8c84566a7ea4355ab04c.png",
+        image:  null,
         name: sellerData.name || "",
         phone: sellerData.phone || "",
         email: sellerData.email || "",
         password:  "",
-        logoimage : sellerData.logoimage || "",
+        logoimage :sellerData.logoimage || "",
         location : sellerData.location || "",
         _id : sellerData._id || ""
     })
     const handleChange = (e) => {
         setProfile({...profile,[e.target.name]:e.target.value})
     }
+
     const dispatch = useDispatch()
     useEffect(()=>{
+        // if(sellerData.image != null){
+        //     setProfile({...profile,image:sellerData.image});
+        // }
       dispatch(checkLogin())
       dispatch(findCategories()) // eslint-disable-next-line
     },[])
@@ -32,10 +37,10 @@ const RestroProfile = () => {
                 <p className='text-xl  font-semibold'>Account</p>
                 <p className='text-gray-500  my-5'>Profile Photo</p>
                 <div className="flex items-center gap-x-5">
-                    <img src={profile.image} alt="" className='w-24 h-24 object-contain' />
-                    <input className='border-b-2' placeholder='Enter Image Url' type="url" value={profile.image} onChange={handleChange} name="image" id="" title=' dsadd' />
+                {profile.image == null && <img src={`${process.env.REACT_APP_API}/${sellerData.image}`} alt="" className='w-24 h-24 object-contain' />}
+                    {profile.image!=null && <img src={URL.createObjectURL(profile.image)} alt="" className='w-24 h-24 object-contain' />}
+                    <input className='border-b-2'  type="file"  onChange={(e)=>setProfile({...profile,image:e.target.files[0]})} name="image" id="" title=' dsadd' />
                 </div>
-                <p className='text-gray-500 text-semibold px-5 cursor-pointer'>Remove</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 h-fit">
                     <div>
                         <h1 className='text-semibold text-lg py-2'>Username</h1>
@@ -48,6 +53,7 @@ const RestroProfile = () => {
                     <div>
                         <h1 className='text-semibold text-lg py-2'>Email Address</h1>
                         <input type="email" name="email" value={profile.email} onChange={handleChange} placeholder='Enter Your Email' className='pl-3 w-full h-12 border-2 outline-none' />
+                        
                     </div>
                     <div>
                         <h1 className='text-semibold text-lg py-2'>Logo Image</h1>
@@ -59,7 +65,21 @@ const RestroProfile = () => {
                     </div>
                     <div>
                         <h1 className='text-semibold text-lg py-2'>Password</h1>
-                        <input type="password" name="password" value={profile.password} onChange={handleChange} placeholder='Enter Your New Password' className='pl-3 w-full h-12 border-2 outline-none' />
+                        <div className="flex itsms-center justify-between"><input type="password" name="password" value={profile.password} onChange={handleChange} placeholder='Enter Your New Password' className='pl-3 w-full h-12 border-2 outline-none' />
+                        <button className='bg-orange-500 p-3 rounded-lg text-white' onClick={async()=>{
+                            const id=profile._id
+                            const password = profile.password;
+                            const data = await axios.post(`${process.env.REACT_APP_API}/seller/updatepassword`,{id,password})
+                           const val = data.data
+                           if(val.success){
+                            window.alert(val.success)
+                           }else{
+                            window.alert(val.alert);
+                           }
+                        }
+                        }><i className="fa fa-edit"></i></button>
+                        </div>
+                       
                     </div>
                     <div className=''>
                         <h1 className='text-semibold text-lg py-2'>Categories</h1>
@@ -67,7 +87,7 @@ const RestroProfile = () => {
                        <select name="categories" id="" onChange={(e)=>setCategory(e.target.value)} placeholder='Select Category' className='pl-3 w-full h-12 border-2 outline-none bg-white'>
                         <option value=""></option>
                         {categories?.length>=1 && categories?.map((category)=>
-                        <option value={category.name}>{category.name}</option>
+                        <option key={Math.random()} value={category.name}>{category.name}</option>
                         )}
                     </select>
                     <button onClick={()=>{dispatch(addCategory({_id:sellerData._id,category:{name:category}}));dispatch(checkLogin())}} className='text-white bg-yellow-500 w-56 py-3 mx-2  rounded-xl  my-4' >Save Category</button>
@@ -77,6 +97,7 @@ const RestroProfile = () => {
                     </div>
  
                 </div>
+                
                 <div className="w-full h-fit flex flex-wrap items-center gap-x-5">
                    {sellerData?.categories?.length >=1 && sellerData?.categories?.map((category) => {
                     return(
@@ -84,7 +105,24 @@ const RestroProfile = () => {
                     )
                    })}
                 </div>
-                <button disabled={!profile.name || !profile.password || !profile.image || !profile.email || !profile.phone || profile.password.length<6 || !profile.logoimage || !profile.location } onClick={()=>dispatch(updatesellerProfile(sellerData))} className='disabled:bg-yellow-200 text-white bg-yellow-500 py-3 mx-2 px-8 rounded-xl float-right my-4'>Save Changes</button>
+                
+                <button disabled={!profile.name  || !profile.image || !profile.email || !profile.phone || !profile.logoimage || !profile.location } onClick={async(e)=>{
+                     e.preventDefault();
+                      if(profile.name && profile.image && profile.email && profile.logoimage && profile.location && profile.phone){
+                        const formData = new FormData();
+                        formData.append('name',profile.name);
+                        formData.append('email',profile.email);
+                        formData.append('phone',profile.phone);
+                        formData.append('image',profile.image);
+                        formData.append('location',profile.location);
+                        formData.append('logoimage',profile.logoimage);
+                        formData.append('_id',profile._id);
+                        const data = await axios.post(`${process.env.REACT_APP_API}/seller/editprofile`, formData)
+                        const dat = data.data;
+                        console.log(dat);
+                        // dispatch(updatesellerProfile(formDataJson));
+                      }}}
+                     className='disabled:bg-yellow-200 text-white bg-yellow-500 py-3 mx-2 px-8 rounded-xl float-right my-4'>Save Changes</button>
             </div>
         </div>
     )

@@ -6,7 +6,7 @@ import { loginUser } from '../Redux/CRUDUser'
 const Login = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [login,setLogin]=useState({phone:"",password:""})
+  const [login,setLogin]=useState({phone:"9817697661",password:"Vishal@123"})
   const handleChange = (e) => {
     const name = e.target.name
     const value = e.target.value
@@ -22,6 +22,7 @@ const Login = () => {
     <input type="password" name='password' value={login.password} onChange={handleChange} className='h-8 w-11/12 border-b-2  mb-5 outline-none' />
     <button onClick={()=>{dispatch(loginUser(login));}} className='w-3/4 mx-10 bg-orange-500 rounded-lg h-12 my-2 text-white text-lg font-semibold'>Login</button>
     <h1 className='text-center my-2 text-lg '>Don't Have An Account ? <span className='text-orange-500 font-bold cursor-pointer' onClick={()=>navigate('/register')}>Sign Up</span></h1>
+    <p className="text-center">Phone : 9817697661 Password : Vishal@123</p>
     </div>
    </div>
   )

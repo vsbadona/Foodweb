@@ -64,6 +64,11 @@ export const updateCategory = createAsyncThunk('seller/updateCategory',async(pro
     const data = await axios.post(`${process.env.REACT_APP_API}/seller/updatecategory`,{name,image,id})
     return data.data
 })
+export const deleteCategory = createAsyncThunk('seller/deleteCategory',async(props) => {
+    const {id}=props
+    const data = await axios.post(`${process.env.REACT_APP_API}/seller/deletecategory`,{id})
+    return data.data
+})
 export const createCategory = createAsyncThunk('seller/createCategory',async(props) => {
     const {name,image}=props
     const data = await axios.get(`${process.env.REACT_APP_API}/seller/createcategory?name=${name}&image=${image}`)
@@ -101,9 +106,7 @@ export const registerSeller = createAsyncThunk('seller/register',async(props) =>
    return data.data
 })
 export const updatesellerProfile = createAsyncThunk("seller/update", async (props) => {
-    const { name, email, phone, password, image ,logoimage, _id,location } = props
-    const sellerId = _id
-    const data = await axios.post(`${process.env.REACT_APP_API}/seller/editprofile`, { name, email, phone,location, password, image,sellerId,logoimage })
+    const data = await axios.post(`${process.env.REACT_APP_API}/seller/editprofile`, props)
     const response = data.data;
     return response
 })

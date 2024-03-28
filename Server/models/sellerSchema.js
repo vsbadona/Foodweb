@@ -10,8 +10,7 @@ const restaurantSchema = mongoose.Schema({
         required: true
     },
     image:{
-        type: String,
-        required: true
+        type: String
     },
     logoimage : {
 type : String
@@ -25,8 +24,7 @@ type : String
         required: true,
     },
     password: {
-        type: String,
-        required: true
+        type: String
     },
     categories : [
         {

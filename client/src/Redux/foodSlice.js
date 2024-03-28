@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { filterSeller, findCategories, findMyOrders, findRestaurant, findSeller, loginUser, orderNow, registerUser, updateProfile, updateCategory, createCategory, createProduct, findProduct, updateProduct, deleteProduct, loginSeller, findSellerOrders, manageOrders, addCategory, removeCategory, registerDelivery, registerSeller, loginDelivery, findOrders, manageOrderDelivery, updatedeliveryProfile, updatesellerProfile } from "./CRUDUser";
+import { filterSeller, findCategories,deleteCategory, findMyOrders, findRestaurant, findSeller, loginUser, orderNow, registerUser, updateProfile, updateCategory, createCategory, createProduct, findProduct, updateProduct, deleteProduct, loginSeller, findSellerOrders, manageOrders, addCategory, removeCategory, registerDelivery, registerSeller, loginDelivery, findOrders, manageOrderDelivery, updatedeliveryProfile, updatesellerProfile } from "./CRUDUser";
 
 
 
@@ -234,8 +234,8 @@ const foodSlice = createSlice({
             })
             .addCase(updateCategory.fulfilled, (state, action) => {
                 if (action.payload.success) {
-                    state.Categories = action.payload.data
-                    window.alert(action.payload.success)
+                    state.categories = action.payload.data
+                    // window.alert(action.payload.success)
                 } else {
                     window.alert(action.payload.alert)
                 }
@@ -243,10 +243,21 @@ const foodSlice = createSlice({
             .addCase(updateCategory.rejected, (state, action) => {
                 window.alert(action.error.message)
             })
+            .addCase(deleteCategory.fulfilled, (state, action) => {
+                if (action.payload.success) {
+                    state.categories = action.payload.data
+                    // window.alert(action.payload.success)
+                } else {
+                    window.alert(action.payload.alert)
+                }
+            })
+            .addCase(deleteCategory.rejected, (state, action) => {
+                window.alert(action.error.message)
+            })
             .addCase(createCategory.fulfilled, (state, action) => {
                 if (action.payload.success) {
                     state.categories = action.payload.data
-                    window.alert(action.payload.success)
+                    // window.alert(action.payload.success)
                 } else {
                     window.alert(action.payload.alert)
                 }
@@ -257,7 +268,7 @@ const foodSlice = createSlice({
             .addCase(createProduct.fulfilled, (state, action) => {
                 if (action.payload.success) {
                     state.products = action.payload.data
-                    window.alert(action.payload.success)
+                    // window.alert(action.payload.success)
                 } else {
                     window.alert(action.payload.alert)
                 }
@@ -280,7 +291,7 @@ const foodSlice = createSlice({
             .addCase(updateProduct.fulfilled, (state, action) => {
                 if (action.payload.success) {
                     state.products = action.payload.product
-                    window.alert(action.payload.success)
+                    // window.alert(action.payload.success)
                 } else {
                     if (action.payload.alert) {
                         window.alert(action.payload.alert)
@@ -293,7 +304,7 @@ const foodSlice = createSlice({
             .addCase(deleteProduct.fulfilled, (state, action) => {
                 if (action.payload.success) {
                     state.products = action.payload.product
-                    window.alert(action.payload.success)
+                    // window.alert(action.payload.success)
                 } else {
                     if (action.payload.alert) {
                         window.alert(action.payload.alert)
@@ -316,7 +327,7 @@ const foodSlice = createSlice({
             })
             .addCase(loginSeller.fulfilled, (state, action) => {
                 if (action.payload.success) {
-                    state.seller = action.payload.data
+                    state.userData = action.payload.data
                     state.login = true
                     state.role = "restaurant"
                     localStorage.setItem("login", true)
