@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { checkLogin } from '../Redux/foodSlice'
-import { addCategory, filterSeller, findCategories, findSeller, removeCategory } from '../Redux/CRUDUser'
+import { addCategory,  findCategories, findSeller, removeCategory } from '../Redux/CRUDUser'
 import axios from 'axios'
 
 const RestroProfile = () => {
@@ -30,10 +30,7 @@ const RestroProfile = () => {
       dispatch(checkLogin())
       dispatch(findCategories()) // eslint-disable-next-line
     },[])
-    const doda = () => {
-        const checkSeller = dispatch(findSeller(sellerData._id))
-        console.log(checkSeller);
-    }
+ 
     return (
         <div className='w-screen '>
             <div className='w-screen md:w-3/4   border-2 mx-auto pt-5 pb-20 px-8 mt-12'>

@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { registerSeller } from '../Redux/CRUDUser'
 import axios from 'axios'
 import { registerSuccess } from '../Redux/foodSlice'
 
