@@ -101,8 +101,8 @@ export const loginSeller = createAsyncThunk('seller/login',async(props) => {
    return data.data
 })
 export const registerSeller = createAsyncThunk('seller/register',async(props) => {
-    const {name,email,phone,password,image,logoimage,location} = props
-    const data = await  axios.post(`${process.env.REACT_APP_API}/seller/register`,{name,email,phone,password,image,logoimage,location})
+   
+    const data = await  axios.post(`${process.env.REACT_APP_API}/seller/register`,{props})
    return data.data
 })
 export const updatesellerProfile = createAsyncThunk("seller/update", async (props) => {

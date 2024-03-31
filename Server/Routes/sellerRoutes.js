@@ -4,7 +4,7 @@ const Routes = express.Router()
 import multer from "multer"
 
 const upload = multer({dest : 'uploads/'});
-Routes.post('/register',registerSeller)
+Routes.post('/register',upload.single('image'),registerSeller)
 Routes.post('/login',loginSeller)
 Routes.post('/editprofile',upload.single('image'),updateProfile)
 Routes.post('/updatepassword',updatePassword)

@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toogleCart } from '../../Redux/foodSlice'
 import { createProduct, findCategories, updateProduct } from '../../Redux/CRUDUser'
 
-const CreateItem = ({ data }) => {
-  const { name, image, price, description, _id, category } = data
+const CreateItem = ({ data,clr }) => {
+  const { name,image, price, description, _id, category } = data
   const sellerData = useSelector(state => state.userData)
   const categories = useSelector(state => state.categories)
   const dispatch = useDispatch()
   const [product, setProduct] = useState({
     display: false,
     name: name || "",
-    image: image || "",
+    image: image||"",
     price: price || "",
     description: description || "",
     category: category || "",
@@ -22,7 +22,10 @@ const CreateItem = ({ data }) => {
     <div className='border-2 rounded-t-xl w-screen md:w-1/2 h-fit z-50 bg-opacity-100 bg-white fixed top-1/2 bottom-1/2 left-1/2 right-1/2 transform -translate-x-1/2 -translate-y-1/2'>
       <div className="flex items-center justify-between px-3 border-b-2 ">
         <h1 className='text-xl font-bold'>{_id ? "Update" : "Create New"} Item</h1>
-        <button className='text-xl' onClick={() => dispatch(toogleCart())}>
+        <button className='text-xl' onClick={() => {
+          clr()
+          dispatch(toogleCart())
+        }}>
           <i className="fa fa-multiply text-red-500 "></i>
         </button>
       </div>
@@ -50,8 +53,8 @@ const CreateItem = ({ data }) => {
         <div className='my-3 '>
           <p className='text-gray-600 font-semibold '>Item Image</p>
           <div className="flex items-center gap-x-1">
-            <img src={product.image} alt="" className='w-12 h-12 rounded-full' />
-            <input value={product.image} onChange={(e) => setProduct({ ...product, image: e.target.value })} type="url" placeholder='Enter Image Url' className='w-full border-2 h-8 rounded-xl border-gray-700 pl-3' />
+            {product.image && <img src={image} alt="" className='w-12 h-12 rounded-full' />}
+            <input  onChange={(e) => setProduct({ ...product, image: e.target.value})} type="url"  value={product.image}placeholder='Enter Image Url' className='w-full border-2 h-8 rounded-xl border-gray-700 pl-3' />
           </div>
         </div>
 

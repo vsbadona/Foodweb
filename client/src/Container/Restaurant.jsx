@@ -18,7 +18,7 @@ const Restaurant = () => {
         scrollToTop()
         dispatch(findSeller(_id)) // eslint-disable-next-line
     }, [_id, selectCategory])
-    const seller = useSelector(state => state.seller)
+    const seller = useSelector(state => state.userData)
 const products = seller.products
 var latest = {}
 if(seller?.products?.length>=1){
@@ -26,11 +26,11 @@ if(seller?.products?.length>=1){
 }    return (
         <div className="w-screen max-h-fit relative flex flex-col items-center bg-gray-100">
             <div className=' w-full object-cover'>
-                <img src={seller?.image} alt="" className='object-cover h-[500px] w-screen' />
+                <img src={seller?`${process.env.REACT_APP_API}/${seller.image}`:""} alt="" className='object-cover h-[500px] w-screen' />
             </div>
             <div className='w-screen h-fit  flex flex-wrap  items-end justify-around mx-auto bg-white'>
                 <div className="flex items-center">
-                    <img src={seller?.image} alt="" className='rounded-t-full h-60 w-56 border-8 border-white -mt-12 hidden md:block' />
+                    <img src={seller?`${process.env.REACT_APP_API}/${seller.image}`:""} alt="" className='rounded-t-full h-60 w-56 border-8 border-white -mt-12 hidden md:block' />
                     <div className=' flex flex-col gap-y-5 mt-3 md:mt-0'>   <div className="flex items-center gap-x-1 text-gray-400" >
                         <i className="fa fa-star"></i>
                         <i className="fa fa-star"></i>

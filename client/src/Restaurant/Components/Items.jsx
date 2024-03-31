@@ -22,6 +22,17 @@ dispatch(findProduct(sellerData?._id))// eslint-disable-next-line
     category:"",
     id:""
   })
+  const clr = () =>{
+    setEditProduct({
+      display:false,
+    name:"",
+    image:"",
+    price:"",
+    description:"",
+    category:"",
+    id:"" 
+    })
+  }
   return (
     <div className="w-full z-10">
     <h1 className='font-semibold py-8 pl-5'>Items</h1>
@@ -45,7 +56,7 @@ dispatch(findProduct(sellerData?._id))// eslint-disable-next-line
   )
 })}
    </div>
-   {viewProduct &&  <CreateItem data={editProduct}/>}
+   {viewProduct &&  <CreateItem data={editProduct} clr={clr}/>}
 </div>
   )
 }

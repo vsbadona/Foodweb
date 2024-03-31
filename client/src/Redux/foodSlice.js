@@ -39,6 +39,9 @@ const foodSlice = createSlice({
                 state.createCateg = false
             }
         },
+        registerSuccess(state,action){
+state.register = true
+        },
         checkLogin(state, action) {
             const auth = localStorage.getItem("login")
             const role = localStorage.getItem("role")
@@ -197,7 +200,8 @@ const foodSlice = createSlice({
                 window.alert(action.error.message)
             })
             .addCase(findSeller.fulfilled, (state, action) => {
-                state.seller = action.payload
+                state.userData = action.payload
+                
             })
             .addCase(findSeller.rejected, (state, action) => {
                 window.alert(action.error.message)
@@ -495,4 +499,4 @@ const foodSlice = createSlice({
 })
 
 export default foodSlice.reducer
-export const { toogleCart, toogleCategory, checkLogin, logoutUser, selectCategory, addCart, checkCart, clearCart, removeItem, updateCart } = foodSlice.actions
+export const { toogleCart,registerSuccess, toogleCategory, checkLogin, logoutUser, selectCategory, addCart, checkCart, clearCart, removeItem, updateCart } = foodSlice.actions

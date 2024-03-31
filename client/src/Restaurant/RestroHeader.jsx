@@ -3,6 +3,7 @@ import Logo from "../Assets/Logo.png"
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { checkLogin, logoutUser } from '../Redux/foodSlice'
+import { filterSeller } from '../Redux/CRUDUser'
 
 const RestroHeader = () => {
   const [nav,setNav]=useState(false)

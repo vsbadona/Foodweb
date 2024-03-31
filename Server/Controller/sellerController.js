@@ -4,8 +4,8 @@ import { Seller } from "../models/sellerSchema.js";
 import bcrypt from "bcryptjs"
 
 export const registerSeller = async (req, res) => {
-    const { name, email, phone, password, location,image,logoimage } = req.body
-    if (name && email && phone && password && location  && image && logoimage) {
+    const { name, email, phone, password, location,image} = req.body
+    // if (name && email && phone && password && location  && image) {
         // Check If given email or phone number already exists
         const checkUnique = await Seller.findOne({ email: email }) || await Seller.findOne({ phone: phone })
         if (checkUnique) {
@@ -16,15 +16,18 @@ export const registerSeller = async (req, res) => {
                 res.json({ alert: "Password Too Short" })
             } else {
                 const pwdtoken = await bcrypt.hash(password, 12)
+                let Image = '';
                 // Create New Seller
                 const mail = email.toLowerCase()
+                if (req.file) {
+                    Image = req.file.path;
+                }
                 const Register = await new Seller({
                     name: name,
                     email: mail,
                     password: pwdtoken,
                     phone: phone,
-                    image : image,
-                    logoimage : logoimage,
+                    image : Image,
                     location: location
                 })
                 if (Register) {
@@ -35,9 +38,7 @@ export const registerSeller = async (req, res) => {
                 }
             }
         }
-    } else {
-        res.json({ alert: "All Fields Are Requires" })
-    }
+   
 }
 
 export const addCategory = async (req,res) => {
@@ -164,8 +165,9 @@ export const deleteProduct = async (req, res) => {
     const findSeller = await Seller.findById(id)
     if (findSeller) {
         // check product in seller product list
-        const findproduct = await findSeller.products.findIndex(product => product._id == product_id)
-        if (findproduct) {
+        const allProducts = findSeller.products;
+        const findproduct = await allProducts.findIndex(product => product._id == product_id)
+        if (findproduct>=0) {
             // filter product from product list
             const del = findSeller.products.filter(product => product._id != product_id)
             findSeller.products = del

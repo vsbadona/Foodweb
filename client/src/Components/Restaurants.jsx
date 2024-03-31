@@ -19,8 +19,9 @@ const Restaurants = () => {
       <h1 className="text-yellow-500 text-3xl text-center">----</h1>
       {restaurants.length !== 0 && <div className='grid xs:grid-col-1 lg:grid-cols-2  xl:grid-cols-3 gap-y-12 gap-x-72 place-items-center w-3/4 mx-auto mt-12 font-serif'>
         {restaurants.map((rest) =>
+        
           <div className='w-80 xl:w-96 relative  ' key={Math.random() + Math.random()} onClick={() => { Cookies.set("seller", rest._id); navigate('/restaurant') }}>
-            <img src={rest.image} alt="" className='object-contain' />
+            <img src={`${process.env.REACT_APP_API}/${rest.image}`} alt="" className='object-contain' />
             <h1 className='absolute top-3 right-5 text-green-500 bg-white rounded-full px-2 py-1'><i className="fa fa-truck"></i></h1>
             <div className="flex absolute text-white text-sm top-44 ">
               <i className="fa fa-star"></i>
@@ -38,7 +39,7 @@ const Restaurants = () => {
               </div>
             </div>
             <div className='bg-white mt-1 flex items-center gap-3 p-2'>
-              <img src={rest.image} alt="" className='w-20 h-20 object-contain' />
+              <img src={`${process.env.REACT_APP_API}/${rest.image}`} alt="" className='w-20 h-20 object-contain' />
               <div>
                 <h1 className='text-yellow-700'><i className="fa fa-clock text-green-500"></i> 09:00 am - 11:00 pm</h1>
                 <h1 className='text-gray-600'><i className="fa fa-location-dot text-orange-500"></i> {rest.location}</h1>

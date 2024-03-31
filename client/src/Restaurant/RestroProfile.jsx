@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { checkLogin } from '../Redux/foodSlice'
-import { addCategory, findCategories, removeCategory } from '../Redux/CRUDUser'
+import { addCategory, filterSeller, findCategories, findSeller, removeCategory } from '../Redux/CRUDUser'
 import axios from 'axios'
 
 const RestroProfile = () => {
     const sellerData = useSelector(state => state.userData)
     const categories = useSelector(state => state.categories)
     const [category,setCategory]=useState("")
+ 
 
     const [profile, setProfile] = useState({
         image:  null,
@@ -25,12 +26,14 @@ const RestroProfile = () => {
 
     const dispatch = useDispatch()
     useEffect(()=>{
-        // if(sellerData.image != null){
-        //     setProfile({...profile,image:sellerData.image});
-        // }
+     
       dispatch(checkLogin())
       dispatch(findCategories()) // eslint-disable-next-line
     },[])
+    const doda = () => {
+        const checkSeller = dispatch(findSeller(sellerData._id))
+        console.log(checkSeller);
+    }
     return (
         <div className='w-screen '>
             <div className='w-screen md:w-3/4   border-2 mx-auto pt-5 pb-20 px-8 mt-12'>
@@ -84,8 +87,8 @@ const RestroProfile = () => {
                     <div className=''>
                         <h1 className='text-semibold text-lg py-2'>Categories</h1>
                        <div className="flex items-center gap-x-2">
-                       <select name="categories" id="" onChange={(e)=>setCategory(e.target.value)} placeholder='Select Category' className='pl-3 w-full h-12 border-2 outline-none bg-white'>
-                        <option value=""></option>
+                       <select name="categories" id="" onChange={(e)=>setCategory(e.target.value)} placeholder='Select Category' className='pl-3 w-full text-black h-12 border-2 outline-none bg-white'>
+                        {/* <option value=""></option> */}
                         {categories?.length>=1 && categories?.map((category)=>
                         <option key={Math.random()} value={category.name}>{category.name}</option>
                         )}
@@ -119,7 +122,12 @@ const RestroProfile = () => {
                         formData.append('_id',profile._id);
                         const data = await axios.post(`${process.env.REACT_APP_API}/seller/editprofile`, formData)
                         const dat = data.data;
-                        console.log(dat);
+                        if(dat.success){
+                            dispatch(findSeller(sellerData?._id))
+                            alert(dat.success)
+                        }else{
+                            alert(dat.alert)
+                        }
                         // dispatch(updatesellerProfile(formDataJson));
                       }}}
                      className='disabled:bg-yellow-200 text-white bg-yellow-500 py-3 mx-2 px-8 rounded-xl float-right my-4'>Save Changes</button>
